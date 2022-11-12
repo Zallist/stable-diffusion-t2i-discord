@@ -53,15 +53,22 @@ requests. Be sure to use the provided templates. They will help aid diagnose iss
 
 ## Table of Contents
 
-1. [Installation](#installation)
-2. [Hardware Requirements](#hardware-requirements)
-3. [Features](#features)
-4. [Latest Changes](#latest-changes)
-5. [Troubleshooting](#troubleshooting)
-6. [Contributing](#contributing)
-7. [Contributors](#contributors)
-8. [Support](#support)
-9. [Further Reading](#further-reading)
+- [InvokeAI: A Stable Diffusion Toolkit](#invokeai-a-stable-diffusion-toolkit)
+  - [Table of Contents](#table-of-contents)
+    - [Installation](#installation)
+    - [Hardware Requirements](#hardware-requirements)
+      - [System](#system)
+      - [Memory](#memory)
+      - [Disk](#disk)
+    - [Features](#features)
+      - [Major Features](#major-features)
+      - [Other Features](#other-features)
+    - [Latest Changes](#latest-changes)
+    - [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+    - [Contributors](#contributors)
+    - [Support](#support)
+    - [Further Reading](#further-reading)
 
 ### Installation
 
@@ -110,23 +117,6 @@ you can try starting `invoke.py` with the `--precision=float32` flag:
 
 #### Major Features
 
-<<<<<<< HEAD
-- [Interactive Command Line Interface](docs/features/CLI.md)
-- [Image To Image](docs/features/IMG2IMG.md)
-- [Inpainting Support](docs/features/INPAINTING.md)
-- [GFPGAN and Real-ESRGAN Support](docs/features/UPSCALE.md)
-- [Seamless Tiling](docs/features/OTHER.md#seamless-tiling)
-- [Google Colab](docs/features/OTHER.md#google-colab)
-- [Web Server](docs/features/WEB.md)
-- [Reading Prompts From File](docs/features/PROMPTS.md#reading-prompts-from-a-file)
-- [Shortcut: Reusing Seeds](docs/features/OTHER.md#shortcuts-reusing-seeds)
-- [Weighted Prompts](docs/features/PROMPTS.md#weighted-prompts)
-- [Negative/Unconditioned Prompts](docs/features/PROMPTS.md#negative-and-unconditioned-prompts)
-- [Variations](docs/features/VARIATIONS.md)
-- [Personalizing Text-to-Image Generation](docs/features/TEXTUAL_INVERSION.md)
-- [Simplified API for text to image generation](docs/features/OTHER.md#simplified-api)
-- [Self-hosted Discord Bot](docs/features/DISCORD_BOT.md)
-=======
 - [Web Server](https://invoke-ai.github.io/InvokeAI/features/WEB/)
 - [Interactive Command Line Interface](https://invoke-ai.github.io/InvokeAI/features/CLI/)
 - [Image To Image](https://invoke-ai.github.io/InvokeAI/features/IMG2IMG/)
@@ -140,7 +130,6 @@ you can try starting `invoke.py` with the `--precision=float32` flag:
 - [Variations](https://invoke-ai.github.io/InvokeAI/features/VARIATIONS/)
 - [Personalizing Text-to-Image Generation](https://invoke-ai.github.io/InvokeAI/features/TEXTUAL_INVERSION/)
 - [Simplified API for text to image generation](https://invoke-ai.github.io/InvokeAI/features/OTHER/#simplified-api)
->>>>>>> 8b47c82992647d6caffe611305f5d30049fa8146
 
 #### Other Features
 
