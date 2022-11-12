@@ -1,11 +1,13 @@
 ---
-title: Windows
+title: Manual Installation, Windows
 ---
+
+# :fontawesome-brands-windows: Windows
 
 ## **Notebook install (semi-automated)**
 
 We have a
-[Jupyter notebook](https://github.com/lstein/stable-diffusion/blob/main/notebooks/Stable-Diffusion-local-Windows.ipynb)
+[Jupyter notebook](https://github.com/invoke-ai/InvokeAI/blob/main/notebooks/Stable-Diffusion-local-Windows.ipynb)
 with cell-by-cell installation steps. It will download the code in this repo as
 one of the steps, so instead of cloning this repo, simply download the notebook
 from the link above and load it up in VSCode (with the appropriate extensions
@@ -13,7 +15,7 @@ installed)/Jupyter/JupyterLab and start running the cells one-by-one.
 
 Note that you will need NVIDIA drivers, Python 3.10, and Git installed
 beforehand - simplified
-[step-by-step instructions](https://github.com/lstein/stable-diffusion/wiki/Easy-peasy-Windows-install)
+[step-by-step instructions](https://github.com/invoke-ai/InvokeAI/wiki/Easy-peasy-Windows-install)
 are available in the wiki (you'll only need steps 1, 2, & 3 ).
 
 ## **Manual Install**
@@ -21,108 +23,113 @@ are available in the wiki (you'll only need steps 1, 2, & 3 ).
 ### **pip**
 
 See
-[Easy-peasy Windows install](https://github.com/lstein/stable-diffusion/wiki/Easy-peasy-Windows-install)
+[Easy-peasy Windows install](https://github.com/invoke-ai/InvokeAI/wiki/Easy-peasy-Windows-install)
 in the wiki
 
 ---
 
 ### **Conda**
 
-1. Install Anaconda3 (miniconda3 version) from here:
-   https://docs.anaconda.com/anaconda/install/windows/
+1. Install Anaconda3 (miniconda3 version) from [here](https://docs.anaconda.com/anaconda/install/windows/)
 
-2. Install Git from here: https://git-scm.com/download/win
+2. Install Git from [here](https://git-scm.com/download/win)
 
 3. Launch Anaconda from the Windows Start menu. This will bring up a command
    window. Type all the remaining commands in this window.
 
 4. Run the command:
 
-    ```bash
-    git clone https://github.com/lstein/stable-diffusion.git
+    ```batch
+    git clone https://github.com/invoke-ai/InvokeAI.git
     ```
 
     This will create stable-diffusion folder where you will follow the rest of
     the steps.
 
-5. Enter the newly-created stable-diffusion folder. From this step forward make
-   sure that you are working in the stable-diffusion directory!
+5. Enter the newly-created InvokeAI folder. From this step forward make sure that you are working in the InvokeAI directory!
 
-    ```bash
-    cd stable-diffusion
+    ```batch
+    cd InvokeAI
     ```
 
 6. Run the following two commands:
 
-    ```bash
-    conda env create -f environment.yaml    (step 6a)
-    conda activate ldm                      (step 6b)
+    ```batch title="step 6a"
+    conda env create
     ```
 
-    This will install all python requirements and activate the "ldm" environment
+    ```batch title="step 6b"
+    conda activate invokeai
+    ```
+
+    This will install all python requirements and activate the "invokeai" environment
     which sets PATH and other environment variables properly.
 
-7. Run the command:
+    Note that the long form of the first command is `conda env create -f environment.yml`. If the
+    environment file isn't specified, conda will default to `environment.yml`. You will need
+    to provide the `-f` option if you wish to load a different environment file at any point.
+
+7. Load the big stable diffusion weights files and a couple of smaller machine-learning models:
 
     ```bash
-    python scripts\preload_models.py
+    python scripts/preload_models.py
     ```
 
-    This installs several machine learning models that stable diffusion requires.
+    !!! note
 
-    Note: This step is required. This was done because some users may might be
-    blocked by firewalls or have limited internet connectivity for the models to
-    be downloaded just-in-time.
+          This script will lead you through the process of creating an account on Hugging Face,
+          accepting the terms and conditions of the Stable Diffusion model license, and
+          obtaining an access token for downloading. It will then download and install the
+          weights files for you.
 
-8. Now you need to install the weights for the big stable diffusion model.
+          Please look [here](INSTALLING_MODELS.md) for a manual process for doing the
+          same thing.
 
-      - For running with the released weights, you will first need to set up an
-        acount with Hugging Face (https://huggingface.co).
-      - Use your credentials to log in, and then point your browser at
-        https://huggingface.co/CompVis/stable-diffusion-v-1-4-original.
-      - You may be asked to sign a license agreement at this point.
-      - Click on "Files and versions" near the top of the page, and then click on
-        the file named `sd-v1-4.ckpt`. You'll be taken to a page that prompts you
-        to click the "download" link. Now save the file somewhere safe on your
-        local machine.
-      - The weight file is >4 GB in size, so downloading may take a while.
+8. Start generating images!
 
-      Now run the following commands from **within the stable-diffusion directory**
-      to copy the weights file to the right place:
+    !!! example ""
 
-      ```bash
-      mkdir -p models\ldm\stable-diffusion-v1
-      copy C:\path\to\sd-v1-4.ckpt models\ldm\stable-diffusion-v1\model.ckpt
-      ```
+        !!! warning "IMPORTANT"
 
-    Please replace `C:\path\to\sd-v1.4.ckpt` with the correct path to wherever
-    you stashed this file. If you prefer not to copy or move the .ckpt file, you
-    may instead create a shortcut to it from within
-    `models\ldm\stable-diffusion-v1\`.
+            Make sure that the conda environment is activated, which should create
+            `(invokeai)` in front of your prompt!
 
-9. Start generating images!
+        === "CLI"
 
-    ```bash
-    # for the pre-release weights
-    python scripts\dream.py -l
+            ```bash
+            python scripts/invoke.py
+            ```
 
-    # for the post-release weights
-    python scripts\dream.py
-    ```
+        === "local Webserver"
 
-10. Subsequently, to relaunch the script, first activate the Anaconda command
-    window (step 3),enter the stable-diffusion directory (step 5,
-    `cd \path\to\stable-diffusion`), run `conda activate ldm` (step 6b), and
-    then launch the dream script (step 9).
+            ```bash
+            python scripts/invoke.py --web
+            ```
 
-    **Note:** Tildebyte has written an alternative
-    ["Easy peasy Windows install"](https://github.com/lstein/stable-diffusion/wiki/Easy-peasy-Windows-install)
+        === "Public Webserver"
+
+            ```bash
+            python scripts/invoke.py --web --host 0.0.0.0
+            ```
+
+        To use an alternative model you may invoke the `!switch` command in
+        the CLI, or pass `--model <model_name>` during `invoke.py` launch for
+        either the CLI or the Web UI. See [Command Line
+        Client](../features/CLI.md#model-selection-and-importation). The
+        model names are defined in `configs/models.yaml`.
+
+9. Subsequently, to relaunch the script, first activate the Anaconda
+command window (step 3),enter the InvokeAI directory (step 5, `cd
+\path\to\InvokeAI`), run `conda activate invokeai` (step 6b), and then
+launch the invoke script (step 9).
+
+!!! tip "Tildebyte has written an alternative"
+
+    ["Easy peasy Windows install"](https://github.com/invoke-ai/InvokeAI/wiki/Easy-peasy-Windows-install)
     which uses the Windows Powershell and pew. If you are having trouble with
     Anaconda on Windows, give this a try (or try it first!)
 
 ---
-
-### Updating to newer versions of the script
 
 This distribution is changing rapidly. If you used the `git clone` method
 (step 5) to download the stable-diffusion directory, then to update to the
@@ -131,7 +138,7 @@ latest and greatest version, launch the Anaconda window, enter
 
 ```bash
 git pull
-conda env update -f environment.yaml
+conda env update
 ```
 
 This will bring your local copy into sync with the remote one.

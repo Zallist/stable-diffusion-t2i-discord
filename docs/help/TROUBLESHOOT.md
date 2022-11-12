@@ -1,6 +1,10 @@
 ---
 title: F.A.Q.
+hide:
+  - toc
 ---
+
+# :material-frequently-asked-questions: F.A.Q.
 
 ## **Frequently-Asked-Questions**
 
@@ -11,20 +15,45 @@ incomplete installations or crashes during the install process.
 
 ### **QUESTION**
 
-During `conda env create -f environment.yaml`, conda hangs indefinitely.
+During `conda env create`, conda hangs indefinitely.
 
-### **SOLUTION**
+If it is because of the last PIP step (usually stuck in the Git Clone step, you can check the detailed log by this method):
+```bash
+export PIP_LOG="/tmp/pip_log.txt"
+touch ${PIP_LOG}
+tail -f ${PIP_LOG} & 
+conda env create -f environment-mac.yaml --debug --verbose
+killall tail
+rm ${PIP_LOG}
+```
 
-Enter the stable-diffusion directory and completely remove the `src` directory and all its contents.
-The safest way to do this is to enter the stable-diffusion directory and give the command
-`git clean -f`. If this still doesn't fix the problem, try "conda clean -all" and then restart at
-the `conda env create` step.
+**SOLUTION**
+
+Conda sometimes gets stuck  at the last PIP step, in which several git repositories are
+cloned and built.
+
+Enter the stable-diffusion directory and completely remove the `src`
+directory and all its contents.  The safest way to do this is to enter
+the stable-diffusion directory and give the command `git clean -f`. If
+this still doesn't fix the problem, try "conda clean -all" and then
+restart at the `conda env create` step.
+
+To further understand the problem to checking the install lot using this method:
+
+```bash
+export PIP_LOG="/tmp/pip_log.txt"
+touch ${PIP_LOG}
+tail -f ${PIP_LOG} & 
+conda env create -f environment-mac.yaml --debug --verbose
+killall tail
+rm ${PIP_LOG}
+```
 
 ---
 
 ### **QUESTION**
 
-`dream.py` crashes with the complaint that it can't find `ldm.simplet2i.py`. Or it complains that
+`invoke.py` crashes with the complaint that it can't find `ldm.simplet2i.py`. Or it complains that
 function is being passed incorrect parameters.
 
 ### **SOLUTION**
@@ -36,12 +65,12 @@ Reinstall the stable diffusion modules. Enter the `stable-diffusion` directory a
 
 ### **QUESTION**
 
-`dream.py` dies, complaining of various missing modules, none of which starts with `ldm``.
+`invoke.py` dies, complaining of various missing modules, none of which starts with `ldm`.
 
 ### **SOLUTION**
 
-From within the `stable-diffusion` directory, run `conda env update -f environment.yaml` This is
-also frequently the solution to complaints about an unknown function in a module.
+From within the `InvokeAI` directory, run `conda env update` This is also frequently the solution to
+complaints about an unknown function in a module.
 
 ---
 
@@ -56,12 +85,11 @@ There's a feature or bugfix in the Stable Diffusion GitHub that you want to try 
 If the fix/feature is on the `main` branch, enter the stable-diffusion directory and do a
 `git pull`.
 
-Usually this will be sufficient, but if you start to see errors about missing or incorrect modules,
-use the command
+Usually this will be sufficient, but if you start to see errors about
+missing or incorrect modules, use the command `pip install -e .`
+and/or `conda env update` (These commands won't break anything.)
 
-`pip install -e .` and/or
-
-`conda env update -f environment.yaml`
+`pip install -e .` and/or `conda env update -f environment.yaml`
 
 (These commands won't break anything.)
 
@@ -87,3 +115,13 @@ branch that contains the pull request:
 
 You will need to go through the install procedure again, but it should be fast because all the
 dependencies are already loaded.
+
+---
+
+### **QUESTION**
+
+Image generation crashed with CUDA out of memory error after successful sampling. 
+
+### **SOLUTION**
+
+Try to run script with option `--free_gpu_mem` This will free memory before image decoding step.
